@@ -1,0 +1,57 @@
+<header class="container__header">
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{{ path('app_home') }}">
+				<img src="{{ asset('images/logo.png') }}" alt="logo Aktibat" class="logo">
+			</a>
+
+			<button class="burger" id="burgerToggle">
+				<i class="fa-solid fa-bars"></i>
+			</button>
+
+			<div class="navbar-collapse" id="frontNavbar">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_home') }}">
+							<i class="fa-solid fa-house"></i>
+							Accueil
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_apropos') }}">
+							<i class="fa-solid fa-circle-info"></i>
+							À propos de nous
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_blog') }}">
+							<i class="fa-solid fa-blog"></i>
+							Blog
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_galerie') }}">
+							<i class="fa-solid fa-image"></i>
+							Galerie
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_temoignages') }}">
+							<i class="fa-solid fa-comments"></i>
+							Témoignages
+							{% if temoignages is defined %}
+								<span class="badge bg-success">{{ temoignages|length }}</span>
+							{% endif %}
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_contact') }}">
+							<i class="fa-solid fa-at"></i>
+							Contact
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>

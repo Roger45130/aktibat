@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # SUPPRIMÉS : les extensions déjà automatiquement enregistrées :
+    # - Twig\Extra\Intl\IntlExtension
+    # - Twig\Extra\Html\HtmlExtension
+    # - Twig\Extra\String\StringExtension
+
+    # Runtime personnalisé (uniquement si utilisé dans ton projet)
+    App\Twig\AppRuntime:
+        tags: ['twig.runtime']

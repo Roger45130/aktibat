@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<h1 class="mb-4">
+			<i class="fa-regular fa-user"></i>
+			Mon Profil</h1>
+
+		<div class="card p-4 shadow-sm">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<strong>Email :</strong>
+					{{ user.email }}</li>
+				<li class="list-group-item">
+					<strong>Rôles :</strong>
+					{{ user.roles | join(', ') }}</li>
+				{% if user.createdAt is defined %}
+					<li class="list-group-item">
+						<strong>Date d'inscription :</strong>
+						{{ user.createdAt|date('d/m/Y') }}</li>
+				{% endif %}
+			</ul>
+		</div>
+
+		<a href="{{ path('app_home') }}" class="btn btn-lg btn-primary mt-4">Retour à l'accueil</a>
+	</div>
+{% endblock %}

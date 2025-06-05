@@ -1,0 +1,153 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Gestion des Commentaires & Témoignages{% endblock %}
+
+
+
+{% block body %}
+	<div class="container mt-5">
+		<h1 class="mb-4 text-center">
+			<i class="fas fa-comments"></i>
+			Administration des Commentaires
+		</h1>
+
+		{# Affichage des messages flash #}
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+		<ul class="nav nav-tabs mb-4" id="commentTabs" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="all-comments-tab" data-bs-toggle="tab" data-bs-target="#all-comments" type="button" role="tab" aria-controls="all-comments" aria-selected="true">
+					Tous les Commentaires
+				</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="testimonials-tab" data-bs-toggle="tab" data-bs-target="#testimonials" type="button" role="tab" aria-controls="testimonials" aria-selected="false">
+					Témoignages
+				</button>
+			</li>
+		</ul>
+
+		<div class="tab-content" id="commentTabsContent">
+			{# --- Tous les commentaires --- #}
+			<div class="tab-pane fade show active" id="all-comments" role="tabpanel" aria-labelledby="all-comments-tab">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>ID</th>
+								<th>Nom</th>
+								<th>Message</th>
+								<th>Date</th>
+								<th>Approuvé</th>
+								<th>Témoignage</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for commentaire in commentaires %}
+								<tr>
+									<td>{{ commentaire.id }}</td>
+									<td>{{ commentaire.name }}</td>
+									<td>{{ commentaire.message|u.truncate(50, '...') }}</td>
+									<td>{{ commentaire.createdAt|date('d/m/Y H:i') }}</td>
+									<td>
+										{% if commentaire.isApproved %}
+											<span class="badge bg-success">Oui</span>
+										{% else %}
+											<span class="badge bg-danger">Non</span>
+										{% endif %}
+									</td>
+									<td>
+										{% if commentaire.isTestimonial %}
+											<span class="badge bg-primary">Oui</span>
+										{% else %}
+											<span class="badge bg-secondary">Non</span>
+										{% endif %}
+									</td>
+									<td>
+										<div class="d-flex gap-2">
+											{% if not commentaire.isApproved %}
+												<a href="{{ path('admin_commentaire_approve', {id: commentaire.id}) }}" class="btn btn-sm btn-success">
+													<i class="fas fa-check"></i>
+													Valider
+												</a>
+											{% endif %}
+											<a href="{{ path('admin_commentaire_delete', {id: commentaire.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer la suppression ?')">
+												<i class="fas fa-trash-alt"></i>
+												Supprimer
+											</a>
+										</div>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="7" class="text-center text-muted">Aucun commentaire pour le moment.</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			{# --- Filtrage des témoignages --- #}
+			<div class="tab-pane fade" id="testimonials" role="tabpanel" aria-labelledby="testimonials-tab">
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>ID</th>
+								<th>Nom</th>
+								<th>Message</th>
+								<th>Date</th>
+								<th>Approuvé</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for commentaire in temoignages %}
+								<tr>
+									<td>{{ commentaire.id }}</td>
+									<td>{{ commentaire.name }}</td>
+									<td>{{ commentaire.message|u.truncate(50, '...') }}</td>
+									<td>{{ commentaire.createdAt|date('d/m/Y H:i') }}</td>
+									<td>
+										{% if commentaire.isApproved %}
+											<span class="badge bg-success">Oui</span>
+										{% else %}
+											<span class="badge bg-danger">Non</span>
+										{% endif %}
+									</td>
+									<td>
+										<div class="d-flex gap-2">
+											{% if not commentaire.isApproved %}
+												<a href="{{ path('admin_commentaire_approve', {id: commentaire.id}) }}" class="btn btn-sm btn-success">
+													<i class="fas fa-check"></i>
+													Valider
+												</a>
+											{% endif %}
+											<a href="{{ path('admin_commentaire_delete', {id: commentaire.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce témoignage ?')">
+												<i class="fas fa-trash-alt"></i>
+												Supprimer
+											</a>
+										</div>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6" class="text-center text-muted">Aucun témoignage pour le moment.</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

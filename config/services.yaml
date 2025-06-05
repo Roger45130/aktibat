@@ -1,0 +1,44 @@
+parameters:
+    locale: 'fr'
+    date_format: 'd/m/Y'
+    datetime_format: 'd/m/Y H:i'
+    app_name: '%env(APP_NAME)%'
+    gallery_images_directory: '%kernel.project_dir%/public/uploads/gallery'
+    blog_images_directory: '%kernel.project_dir%/public/uploads/blog'
+    GA_ID: '%env(GA_ID)%'
+    mailer.contact: '%env(MAILER_CONTACT)%'
+    mailer.from: '%env(MAILER_FROM)%'
+    mailer.sender_name: '%env(MAILER_SENDER_NAME)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind: []
+
+    # Chargement automatique des classes de l'application (hors entités)
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # Chargement des contrôleurs avec injection automatique d'arguments
+    App\Controller\:
+        resource: '../src/Controller/*'
+        exclude: '../src/Controller/{AbstractController,Service}'
+        tags: ['controller.service_arguments']
+
+    # Déclaration explicite pour corriger l'erreur d'autowiring sur GlobalVariablesRuntime
+    App\Twig\GlobalVariablesRuntime:
+        arguments:
+            $appName: '%app_name%'
+            $appDomain: '%env(APP_DOMAIN)%'
+            $currentYear: '%env(CURRENT_YEAR)%'
+            $googleAnalyticsId: '%env(GA_ID)%'
+
+    # Déclaration explicite pour résoudre le problème du UserRepository non injecté
+    App\Repository\UserRepository:
+        autowire: true
+        autoconfigure: true
+        public: true

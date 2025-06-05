@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable - Erreur 404 | Aktibat
+{% endblock %}
+
+{% block body %}
+	<div class="container text-center py-5">
+		<h1 class="display-1 text-danger mb-4">404</h1>
+		<h2 class="mb-3">Oups ! Cette page est introuvable.</h2>
+		<p class="lead mb-4">Il semble que la page que vous recherchez n'existe pas ou a été supprimée.</p>
+
+		<a href="{{ path('app_home') }}" class="btn btn-primary btn-lg">
+			<i class="fa-solid fa-house"></i>
+			Retour à l'accueil
+		</a>
+
+		<div class="mt-5">
+			<img src="{{ asset('images/EURREUR404.png') }}" alt="Erreur 404" class="img-fluid" style="max-height: 300px;">
+		</div>
+	</div>
+{% endblock %}

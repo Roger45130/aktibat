@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos de nous | Aktibat
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h1 class="text-center mb-4 fade-in h1APropos">À propos de nous</h1>
+		<p class="lead text-center fade-in pAPropos">
+			Depuis octobre 2005, Aktibat accompagne vos projets de maçonnerie avec passion, savoir-faire et exigence.
+		</p>
+
+		{# Section présentation avec image et texte #}
+		<div class="row align-items-center justify-content-center text-center my-5 fade-in">
+			<div class="col-md-6">
+				<img src="{{ asset('images/2008 005.jpg') }}" alt="Chantier Aktibat" class="img-fluid rounded shadow img-500 hover-scale centered-img"/>
+			</div>
+			<br>
+			<div class="col-md-6">
+				<h2 class="mb-3 h2APropos">Une entreprise locale et familiale</h2>
+				<p class="pAPropos">
+					Fondée en
+					<strong>octobre 2005</strong>, Aktibat est une entreprise de maçonnerie générale implantée à Saint-Laurent-des-Bois (41), au cœur du Loir-et-Cher.
+																																																																																																																																																																																										                Portée par des valeurs humaines fortes et une vision artisanale du métier, notre société familiale allie expérience, proximité et qualité d'exécution.
+				</p>
+				<p class="pAPropos">
+					Le dirigeant de l'entreprise Aktibat a été formé à la
+					<strong>Fédération Compagnonique des Métiers du Bâtiment (F.C.M.B.)</strong>
+					dont les formateurs sont tous
+					<strong>Compagnons du Tours de France</strong>.
+				</p>
+				<p class="pAPropos">
+					Forts de plus de 20 ans d'expertise dans le bâtiment, nous intervenons pour vos travaux de construction, rénovation, extensions, dallages, terrasses et bien plus encore.
+				</p>
+			</div>
+		</div>
+
+		<br><br>
+
+		{# Galerie de l’équipe ou des chantiers #}
+		<div class="my-5 fade-in">
+			<h2 class="text-center mb-4 h2APropos">Quelques-uns de nos chantiers</h2>
+			<div class="row g-4 justify-content-center text-center">
+				<div class="col-md-4 d-flex justify-content-center align-items-center">
+					<img src="{{ asset('images/2008 008.jpg') }}" alt="Chantier Aktibat 1" class="img-fluid rounded shadow-sm img-200 hover-scale"/>
+				</div>
+				<div class="col-md-4 d-flex justify-content-center align-items-center">
+					<img src="{{ asset('images/2008 014.jpg') }}" alt="Chantier Aktibat 2" class="img-fluid rounded shadow-sm img-200 hover-scale"/>
+				</div>
+			</div>
+		</div>
+
+		{# Call to action #}
+		<div class="text-center mt-5 fade-in">
+			<h3 class="mb-3  h3APropos">Vous voulez voir quelques-unes de nos réalisations ? Rendez-vous dans notre
+			</h3>
+			<a href="{{ path('app_galerie') }}" class="btn btn-primary btn-lg text-white">
+				<i class="fa-solid fa-image text-white"></i>
+				Galerie
+			</a>
+		</div>
+
+
+		{# Call to action final #}
+		<div class="text-center mt-5 fade-in">
+			<h3 class="mb-3 h3APropos">Prêts à démarrer votre projet ?</h3>
+			<a href="{{ path('app_contact') }}" class="btn btn-primary btn-lg text-white">
+				<i class="fa-solid fa-envelope text-white"></i>
+				Contactez-nous
+			</a>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+framework:
+    cache:
+        # Adaptateur de cache principal
+        app: cache.adapter.filesystem
+
+        # Fournisseur Redis (si activé et configuré)
+        default_redis_provider: redis://localhost
+
+        # Pools personnalisés
+        pools:
+            my_custom_cache_pool:
+                adapter: cache.adapter.filesystem

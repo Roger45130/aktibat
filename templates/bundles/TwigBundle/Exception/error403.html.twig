@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé | Aktibat
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 text-center">
+		<h1 class="display-4 text-danger">403 - Accès refusé</h1>
+		<p class="lead mt-3">Vous n'avez pas l'autorisation d'accéder à cette page.</p>
+		<p class="mb-4">Cette section est réservée aux administrateurs du site Aktibat.</p>
+
+		<a href="{{ path('app_home') }}" class="btn btn-primary">
+			<i class="fas fa-home me-2"></i>
+			Retour à l'accueil
+		</a>
+	</div>
+{% endblock %}

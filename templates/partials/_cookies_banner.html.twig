@@ -1,0 +1,63 @@
+{# BANDEAU COOKIES AVANCÉ RGPD #}
+<div id="cookie-banner" class="cookie-banner d-none">
+	<div class="cookie-content">
+		<p>
+			Ce site utilise des cookies pour optimiser votre expérience utilisateur.
+			<a href="{{ path('app_mentions_legales') }}" target="_blank">En savoir plus</a>.
+		</p>
+		<div class="cookie-actions">
+			<button class="btn btn-success btn-sm me-1" id="accept-all">Tout accepter</button>
+			<button class="btn btn-warning btn-sm me-1" id="customize-cookies">Personnaliser</button>
+			<button class="btn btn-outline-light btn-sm" id="reject-all">Tout refuser</button>
+		</div>
+	</div>
+</div>
+
+{# MODALE DE PERSONNALISATION DES COOKIES #}
+<div id="cookie-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content shadow-lg border-0 rounded-4">
+			<div class="modal-header bg-primary text-white">
+				<h5 class="modal-title">
+					<i class="fa-solid fa-gear me-2"></i>Préférences de confidentialité
+				</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+			</div>
+			<div class="modal-body">
+				<p class="mb-4">Vous pouvez personnaliser votre consentement pour chaque type de cookies utilisé sur notre site.</p>
+
+				<div class="form-check mb-3">
+					<input class="form-check-input" type="checkbox" id="consent-essentiel" checked disabled>
+					<label class="form-check-label" for="consent-essentiel">
+						<strong>Essentiels</strong>
+						— Ces cookies sont nécessaires au bon fonctionnement du site.
+					</label>
+				</div>
+
+				<div class="form-check mb-3">
+					<input class="form-check-input" type="checkbox" id="consent-statistiques">
+					<label class="form-check-label" for="consent-statistiques">
+						<strong>Statistiques</strong>
+						— Nous aident à comprendre comment vous utilisez le site pour l’améliorer.
+					</label>
+				</div>
+
+				<div class="form-check mb-3">
+					<input class="form-check-input" type="checkbox" id="consent-marketing">
+					<label class="form-check-label" for="consent-marketing">
+						<strong>Marketing</strong>
+						— Permettent d’afficher des contenus personnalisées.
+					</label>
+				</div>
+			</div>
+			<div class="modal-footer d-flex justify-content-between">
+				<button class="btn btn-outline-secondary" id="modal-reject-all" data-bs-dismiss="modal">
+					Refuser tout
+				</button>
+				<button class="btn btn-primary" id="modal-accept-custom" data-bs-dismiss="modal">
+					Enregistrer mes choix
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,5 @@
+doctrine_migrations:
+    migrations_paths:
+        # Ce namespace est arbitraire, mais doit être unique (et ne pas être "App\Migrations")
+        'DoctrineMigrations': '%kernel.project_dir%/migrations'
+    enable_profiler: false

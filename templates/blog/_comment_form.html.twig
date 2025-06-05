@@ -1,0 +1,47 @@
+{% if commentForm is defined and commentForm %}
+	<div class="comment-form">
+		<div class="card border-0 shadow-sm">
+			<div class="card-body p-4">
+				<h3 class="h5 mb-4">Laisser un commentaire</h3>
+
+				{{ form_start(commentForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+				<div class="form-group mb-4">
+					{{ form_label(commentForm.name, 'Nom ou pseudonyme', {
+                        'label_attr': {'class': 'form-label'}
+                    }) }}
+					{{ form_widget(commentForm.name, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Votre nom ou pseudo'
+                        }
+                    }) }}
+					{{ form_errors(commentForm.name) }}
+				</div>
+
+				<div class="form-group mb-4">
+					{{ form_label(commentForm.message, 'Votre message', {
+                        'label_attr': {'class': 'form-label'}
+                    }) }}
+					{{ form_widget(commentForm.message, {
+                        'attr': {
+                            'class': 'form-control',
+                            'rows': 5,
+                            'placeholder': 'Écrivez votre commentaire ici...'
+                        }
+                    }) }}
+					{{ form_errors(commentForm.message) }}
+				</div>
+
+				<div class="d-flex justify-content-end">
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-paper-plane me-2"></i>
+						Envoyer
+					</button>
+				</div>
+
+				{# {{ form_end(commentForm) }} #}
+			</div>
+		</div>
+	</div>
+{% endif %}

@@ -1,0 +1,10 @@
+framework:
+    validation:
+        # Active l'auto-mapping pour les entités Doctrine
+        auto_mapping:
+            App\Entity\: []
+
+when@test:
+    framework:
+        validation:
+            not_compromised_password: false

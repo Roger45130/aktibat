@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Entreprise de maçonnerie générale à Saint-Laurent-des-Bois (41), nous réalisons tous vos travaux de maçonnerie, rénovation et gros oeuvre dans le Loir-et-Cher, Eure-et-Loir et Loiret. Expertise, qualité et respect des délais pour vos projets de maçonnerie. Devis gratuit !">
+		<meta name="keywords" content="Aktibat, aktibat, maçonnerie générale, travaux de maçonnerie, rénovation maison 41, rénovation maison 45, entreprise maçonnerie Saint-Laurent-des-Bois, construction Loir-et-Cher, construction Loiret, maçon 41, maçon 45, gros oeuvre, entreprise du bâtiment 41, entreprise du bâtiment 45, artisan maçon, rénovation 41,rénovation 45, travaux de construction Saint-Laurent-des-Bois, maçonnerie traditionnelle, devis maçonnerie gratuit, maçon professionnel 41 maçon professionnel 45.">
+		<meta name="author" content="AKTIBAT"/>
+		{% if app.environment == 'prod' and google_analytics_id is defined %}
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+const consent = localStorage.getItem("cookie-preferences");
+if (consent) {
+const prefs = JSON.parse(consent);
+if (prefs.statistiques || prefs.marketing) {
+const script = document.createElement("script");
+script.src = "https://www.googletagmanager.com/gtag/js?id= {{ google_analytics_id }}";
+script.async = true;
+document.head.appendChild(script);
+
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', '{{ google_analytics_id }}');
+}
+}
+});
+			</script>
+		{% endif %}
+		<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/gif"/>
+		<link rel="stylesheet" href="{{ asset('assets/css-famma/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css-famma/font-awesome.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css-famma/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css-famma/responsive.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/cookies.css') }}">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		<title>Aktibat | Maçonnerie Générale</title>
+	</head>
+
+	<body>
+		{% include 'partials/_header.html.twig' %}
+		{% block body %}{% endblock %}
+		{% include 'partials/_footer.html.twig' %}
+		{% include 'partials/_cookies_banner.html.twig' %}
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+const banner = document.getElementById("cookie-banner");
+const acceptAll = document.getElementById("accept-all");
+const rejectAll = document.getElementById("reject-all");
+const customize = document.getElementById("customize-cookies");
+
+if (!localStorage.getItem("cookie-consent")) {
+banner.classList.remove("d-none");
+}
+
+acceptAll.addEventListener("click", () => {
+localStorage.setItem("cookie-consent", "all");
+banner.classList.add("d-none");
+});
+
+rejectAll.addEventListener("click", () => {
+localStorage.setItem("cookie-consent", "none");
+banner.classList.add("d-none");
+});
+
+customize.addEventListener("click", () => {
+alert("Le panneau de personnalisation arrive bientôt !");
+});
+});
+		</script>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+const banner = document.getElementById("cookie-preferences");
+const btnAccept = document.getElementById("accept-selected-cookies");
+const btnReject = document.getElementById("reject-all-cookies");
+const stats = document.getElementById("cookie-statistiques");
+const marketing = document.getElementById("cookie-marketing");
+
+if (!localStorage.getItem("cookie-preferences-set")) {
+banner.classList.add("show");
+}
+
+btnAccept.addEventListener("click", () => {
+const prefs = {
+essential: true,
+statistiques: stats.checked,
+marketing: marketing.checked
+};
+localStorage.setItem("cookie-preferences", JSON.stringify(prefs));
+localStorage.setItem("cookie-preferences-set", "true");
+banner.classList.add("d-none");
+});
+
+btnReject.addEventListener("click", () => {
+const prefs = {
+essential: true,
+statistiques: false,
+marketing: false
+};
+localStorage.setItem("cookie-preferences", JSON.stringify(prefs));
+localStorage.setItem("cookie-preferences-set", "true");
+banner.classList.add("d-none");
+});
+});
+		</script>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+const customizeBtn = document.getElementById("customize-cookies");
+const acceptCustomBtn = document.getElementById("modal-accept-custom");
+const rejectModalBtn = document.getElementById("modal-reject-all");
+const statCheckbox = document.getElementById("consent-statistiques");
+const marketCheckbox = document.getElementById("consent-marketing");
+
+customizeBtn ?. addEventListener("click", () => {
+const modal = new bootstrap.Modal(document.getElementById("cookie-modal"));
+modal.show();
+});
+
+acceptCustomBtn ?. addEventListener("click", () => {
+const prefs = {
+essential: true,
+statistiques: statCheckbox.checked,
+marketing: marketCheckbox.checked
+};
+localStorage.setItem("cookie-preferences", JSON.stringify(prefs));
+localStorage.setItem("cookie-preferences-set", "true");
+});
+
+rejectModalBtn ?. addEventListener("click", () => {
+const prefs = {
+essential: true,
+statistiques: false,
+marketing: false
+};
+localStorage.setItem("cookie-preferences", JSON.stringify(prefs));
+localStorage.setItem("cookie-preferences-set", "true");
+});
+});
+		</script>
+
+		{% if is_granted('ROLE_ADMIN') %}
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+const consent = localStorage.getItem("cookie-consent") || "unset";
+const preferences = localStorage.getItem("cookie-preferences");
+
+if (!localStorage.getItem("consent-sent") && consent !== "unset") {
+const data = {
+consent: consent,
+preferences: preferences ? JSON.parse(preferences) : null,
+datetime: new Date().toISOString()
+};
+
+fetch("{{ path('admin_cookie_consent_capture') }}", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}).then(response => {
+if (response.ok) {
+localStorage.setItem("consent-sent", "true");
+console.log("Consentement cookies enregistré (admin)");
+}
+}).catch(error => {
+console.error("Erreur lors de l'envoi du consentement :", error);
+});
+}
+});
+			</script>
+
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+const burger = document.getElementById('burgerToggle');
+const nav = document.getElementById('frontNavbar');
+burger.addEventListener('click', () => {
+nav.classList.toggle('active');
+});
+});
+			</script>
+		{% endif %}
+
+		<script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="{{ asset('js/custom.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.js') }}"></script>
+		<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+		<script src="{{ asset('js/menu_burger.js') }}"></script>
+		<script src="{{ asset('js/menu_dropdown.js') }}"></script>
+		<script src="{{ asset('js/popper.min.js') }}"></script>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
+</html>

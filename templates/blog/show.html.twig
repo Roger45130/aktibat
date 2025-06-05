@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ article.title }} | {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="article-container">
+		{% if article.image is not empty %}
+			<div class="article-image-container">
+				<img src="{{ asset('uploads/blog/' ~ article.image) }}" alt="{{ article.title }}" class="article-image" loading="eager">
+			</div>
+		{% endif %}
+
+		<div class="article-header">
+			<h1 class="article-title">{{ article.title }}</h1>
+			<div class="article-meta">
+				Publié le {{ article.createdAt|date('d/m/Y') }}
+			</div>
+		</div>
+
+		<div class="article-content">
+			{{ article.content|raw|nl2br }}
+		</div>
+
+		<br><br>
+		<a href="{{ path('app_blog') }}" class="btn btn-lg btn-primary btn-show-blog text-white">
+			<i class="fa-solid fa-arrow-left text-white"></i>
+			Retour aux articles
+		</a>
+
+		{# Section commentaires #}
+		{# <section class="comment-section mt-5">
+			<h2 class="h4 mb-4">Commentaires ({{ commentaires|length }})</h2>
+
+			{% if commentaires|length > 0 %}
+				<div class="comment-list mb-5">
+					{% for comment in commentaires %}
+						<div class="comment mb-4 pb-3 border-bottom">
+							<div class="d-flex justify-content-between mb-2">
+								<strong>{{ comment.name ?? comment.username }}</strong>
+								<small class="text-muted">{{ comment.createdAt|date('d/m/Y H:i') }}</small>
+							</div>
+							<p class="mb-0">{{ comment.message }}</p>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p class="text-muted mb-5">Aucun commentaire pour le moment. Soyez le premier à réagir !</p>
+			{% endif %} #}
+
+			{# Formulaire de commentaire (affiché à tous) #}
+			{# {% if commentForm is defined %}
+				{{ include('blog/_comment_form.html.twig', {
+                    'commentForm': commentForm
+                }) }}
+			{% else %}
+				<div class="alert alert-info">
+					La fonctionnalité de commentaires est temporairement indisponible.
+				</div>
+			{% endif %}
+		</section> #}
+	</div>
+{% endblock %}

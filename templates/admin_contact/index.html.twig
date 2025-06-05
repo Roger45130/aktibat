@@ -1,0 +1,108 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Gestion des Messages de Contact
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.contact-table-container {
+			max-width: 1400px;
+			margin: 2rem auto;
+			padding: 0 1.5rem;
+		}
+		.contact-header {
+			background: linear-gradient(135deg, #0f2027, #2c5364);
+			color: white;
+			padding: 2rem;
+			border-radius: 12px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+			margin-bottom: 2rem;
+			text-align: center;
+		}
+		.table thead th {
+			background-color: #2c3e50;
+			color: white;
+			font-weight: 600;
+			padding: 1rem;
+		}
+		.table tbody td {
+			vertical-align: middle;
+		}
+		.btn-view {
+			min-width: 100px;
+		}
+		.export-btn {
+			float: right;
+			margin-top: 1rem;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="contact-table-container">
+		<div class="contact-header">
+			<h1>
+				<i class="fas fa-envelope me-2"></i>Messages de Contact</h1>
+			<p class="mb-0">Retrouvez ici tous les messages envoyés via le formulaire de contact</p>
+		</div>
+
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+					<i class="fas fa-{{ label == 'success' ? 'check-circle' : 'exclamation-circle' }} me-2"></i>
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+		{% if contacts is not empty %}
+			<div class="table-responsive">
+				<table class="table table-hover align-middle table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nom</th>
+							<th>Email</th>
+							<th>Sujet</th>
+							<th>Date</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for contact in contacts %}
+							<tr>
+								<td>
+									<span class="badge bg-secondary">#{{ contact.id }}</span>
+								</td>
+								<td>{{ contact.fullname }}</td>
+								<td>
+									<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+								</td>
+								<td>{{ contact.subject }}</td>
+								<td>{{ contact.createdAt|date('d/m/Y H:i') }}</td>
+								<td>
+									<a href="{{ path('admin_contact_voir', { id: contact.id }) }}" class="btn btn-primary btn-sm btn-view">
+										<i class="fas fa-eye me-1"></i>
+										Voir
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<a href="{{ path('admin_contact_export_pdf') }}" class="btn btn-success export-btn" target="_blank">
+				<i class="fas fa-file-pdf me-1"></i>
+				Exporter en PDF
+			</a>
+		{% else %}
+			<div class="alert alert-info text-center mt-5">
+				<i class="fas fa-inbox fa-2x mb-2"></i>
+				<p class="mb-0">Aucun message n’a été reçu pour le moment.</p>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

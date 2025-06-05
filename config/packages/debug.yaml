@@ -1,0 +1,4 @@
+when@dev:
+    debug:
+        # Permet de voir les dumps en temps réel dans le terminal ou navigateur (avec le web profiler actif)
+        dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"

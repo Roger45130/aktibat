@@ -1,0 +1,131 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs | Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h1 class="text-center mb-4">
+			<i class="fa-solid fa-users"></i>
+			Gestion des utilisateurs</h1>
+
+		{# Formulaire de recherche #}
+		<form method="get" class="row g-2 justify-content-center mb-4">
+			<div class="col-auto">
+				<input type="text" name="email" class="form-control" placeholder="Rechercher un email..." value="{{ search_email }}">
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-primary">Rechercher</button>
+			</div>
+			{% if search_email %}
+				<div class="col-auto">
+					<a href="{{ path('admin_user_index') }}" class="btn btn-secondary">Réinitialiser</a>
+				</div>
+			{% endif %}
+		</form>
+
+		{# Résultat de la recherche #}
+		{% if search_results is not null %}
+			<h2>Résultat de la recherche pour :
+				<strong>{{ search_email }}</strong>
+			</h2>
+
+			{% if search_results is empty %}
+				<div class="alert alert-warning mt-3">Aucun utilisateur trouvé.</div>
+			{% else %}
+				<table class="table table-bordered table-striped mt-3 align-middle">
+					<thead class="table-dark">
+						<tr>
+							<th>ID</th>
+							<th>Email</th>
+							<th>Rôles</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in search_results %}
+							<tr>
+								<td>{{ user.id }}</td>
+								<td>{{ user.email }}</td>
+								<td>
+									{% for role in user.roles %}
+										<span class="badge bg-info text-dark">{{ role }}</span>
+									{% endfor %}
+								</td>
+								<td class="text-center">
+									{% if 'ROLE_ADMIN' not in user.roles %}
+										<a href="{{ path('admin_user_make_admin', {id: user.id}) }}" class="btn btn-sm btn-success">
+											<i class="fa-solid fa-user-plus"></i>
+											Admin</a>
+									{% else %}
+										<a href="{{ path('admin_user_remove_admin', {id: user.id}) }}" class="btn btn-sm btn-danger">
+											<i class="fa-solid fa-user-minus"></i>
+											Admin</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+			<hr>
+		{% endif %}
+
+		{# 3 tableaux principaux : tous, users, admins #}
+		{% for label, users in {
+        'Tous les utilisateurs': all_users,
+        'Utilisateurs avec ROLE_USER': users_only,
+        'Utilisateurs avec ROLE_ADMIN': admins_only
+    } %}
+			<h2 class="mt-5">{{ label }}</h2>
+			<table class="table table-bordered table-striped align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Email</th>
+						<th>Rôles</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.id }}</td>
+							<td>{{ user.email }}</td>
+							<td>
+								{% for role in user.roles %}
+									<span class="badge bg-info text-dark">{{ role }}</span>
+								{% endfor %}
+							</td>
+							<td class="text-center">
+								{% if 'ROLE_ADMIN' not in user.roles %}
+									<a href="{{ path('admin_user_make_admin', {id: user.id}) }}" class="btn btn-sm btn-success">
+										<i class="fa-solid fa-user-plus"></i>
+										Admin</a>
+								{% else %}
+									<a href="{{ path('admin_user_remove_admin', {id: user.id}) }}" class="btn btn-sm btn-danger">
+										<i class="fa-solid fa-user-minus"></i>
+										Admin</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4" class="text-center">Aucun utilisateur trouvé.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endfor %}
+
+		{# Alertes Symfony #}
+		{% for type, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ type }} alert-dismissible fade show mt-3" role="alert">
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+{% endblock %}

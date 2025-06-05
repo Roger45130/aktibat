@@ -1,0 +1,9 @@
+framework:
+    router:
+        # Cette option est utile pour générer des URLs dans des contextes sans HTTP (ex: commandes)
+        # default_uri: http://localhost
+
+when@prod:
+    framework:
+        router:
+            strict_requirements: null

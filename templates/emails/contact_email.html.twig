@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Nouveau message de contact</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 14px;
+				color: #333;
+				background-color: #f9f9f9;
+				padding: 20px;
+			}
+
+			.email-container {
+				background-color: #ffffff;
+				padding: 20px;
+				border: 1px solid #ddd;
+				max-width: 600px;
+				margin: 0 auto;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+			}
+
+			h2 {
+				color: #007bff;
+				font-size: 20px;
+				margin-bottom: 20px;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+
+			.label {
+				font-weight: bold;
+				color: #555;
+			}
+
+			.footer {
+				margin-top: 30px;
+				font-size: 12px;
+				color: #999;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="email-container">
+			<h2>
+				<i class="fa-solid fa-envelope-open-text"></i>
+				Nouveau message de contact</h2>
+
+			<p>
+				<span class="label">Nom complet :</span>
+				{{ contact.fullname }}</p>
+			<p>
+				<span class="label">Adresse email :</span>
+				{{ contact.email }}</p>
+			<p>
+				<span class="label">Sujet :</span>
+				{{ contact.subject }}</p>
+			<p>
+				<span class="label">Message :</span>
+			</p>
+			<p>{{ contact.message|nl2br }}</p>
+			<p>
+				<span class="label">Date d'envoi :</span>
+				{{ contact.createdAt|date('d/m/Y à H:i') }}</p>
+
+			<div class="footer">
+				Ce message a été généré automatiquement depuis le site Aktibat.fr.
+			</div>
+		</div>
+	</body>
+</html>

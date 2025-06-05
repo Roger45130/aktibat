@@ -1,0 +1,210 @@
+/* Bannière cookie RGPD */
+
+.cookie-banner {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 800px;
+  background: linear-gradient(135deg, #fff, #f4f4f4);
+  border: 2px solid #0d6efd;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: slideIn 0.6s ease-out;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 50px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.cookie-banner .cookie-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cookie-banner .cookie-content p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.cookie-banner .cookie-content a {
+  color: #0d6efd;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.cookie-banner .cookie-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cookie-banner .cookie-actions button {
+  border: none;
+  padding: 10px 22px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.cookie-banner .cookie-actions #accept-cookies {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.cookie-banner .cookie-actions #accept-cookies:hover {
+  background-color: #0056b3;
+}
+
+.cookie-banner .cookie-actions #reject-cookies {
+  background-color: transparent;
+  color: #0d6efd;
+  border: 1px solid #0d6efd;
+}
+
+.cookie-banner .cookie-actions #reject-cookies:hover {
+  background-color: #e6f0ff;
+}
+
+@media (max-width: 576px) {
+  .cookie-banner {
+    padding: 15px;
+  }
+
+  .cookie-banner .cookie-content p {
+    font-size: 14px;
+  }
+
+  .cookie-banner .cookie-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+
+/* === Bannière de consentement cookie stylisée RGPD === */
+
+.cookie-banner {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 780px;
+    background: linear-gradient(135deg, #ffffff, #f0f2f5);
+    border: 2px solid #0d6efd;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    animation: fadeInSlide 0.7s ease-out;
+    font-family: 'Segoe UI', sans-serif;
+    display: none;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 60px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.cookie-banner.show {
+    display: block;
+}
+
+.cookie-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+
+.cookie-content p {
+    margin: 0;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.cookie-content a {
+    color: #0d6efd;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.cookie-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.cookie-actions button {
+    border: none;
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.cookie-actions #accept-cookies {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.cookie-actions #accept-cookies:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.05);
+}
+
+.cookie-actions #reject-cookies {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+}
+
+.cookie-actions #reject-cookies:hover {
+    background-color: #e9f2ff;
+    transform: scale(1.05);
+}
+
+/* Responsive mobile */
+@media (max-width: 576px) {
+    .cookie-banner {
+        padding: 15px;
+    }
+
+    .cookie-content p {
+        font-size: 14px;
+    }
+
+    .cookie-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

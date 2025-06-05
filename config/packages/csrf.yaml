@@ -1,0 +1,11 @@
+framework:
+    csrf_protection:
+        enabled: true
+        # Liste des identifiants de tokens CSRF pouvant être utilisés de manière stateless (ex. API)
+        stateless_token_ids:
+            - submit
+            - authenticate
+            - logout
+
+    form:
+        csrf_protection: true

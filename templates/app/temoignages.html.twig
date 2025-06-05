@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Témoignages | Aktibat{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h1 class="text-center mb-4 fade-in h1Temoins">Vos témoignages</h1>
+
+		<p class="text-center fade-in pTemoins">
+			Découvrez ce que nos clients disent de nous. Partagez aussi votre expérience !
+		</p>
+
+		{# Formulaire de témoignage accessible à tous #}
+		<div class="card mb-5 form-section shadow">
+			<div class="card-body">
+				<h5 class="card-title">Laissez votre témoignage</h5>
+				{{ form_start(form) }}
+
+				{# Champ pour le nom ou pseudonyme #}
+				<div class="mb-3">
+					{{ form_label(form.name) }}
+					{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.name) }}
+				</div>
+
+				{# Champ pour le message #}
+				<div class="mb-3">
+					{{ form_label(form.message) }}
+					{{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+					{{ form_errors(form.message) }}
+				</div>
+
+				{# Bouton de validation #}
+				<div class="text-end">
+					{{ form_widget(form.envoyer) }}
+				</div>
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+
+		<hr class="my-4">
+
+		{# Affichage des témoignages approuvés (avec animation) #}
+		<div class="row">
+			{% for commentaire in temoignages %}
+				<div class="col-md-6 col-lg-4 mb-4 fade-in">
+					<div class="card shadow testimonial-card h-100">
+						<div class="card-body">
+							<h5 class="card-title">{{ commentaire.name }}</h5>
+							<p class="card-text">{{ commentaire.message }}</p>
+							<p class="card-text">
+								<small class="text-muted">Posté le {{ commentaire.createdAt|date('d/m/Y') }}</small>
+							</p>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p class="text-center fade-in pTemoins">Aucun témoignage pour le moment.</p>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}
+    {{ editMode ? 'Modifier un article' : 'Nouvel article' }} - Admin Blog
+{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">
+                <i class="fas fa-{{ editMode ? 'edit' : 'plus' }}"></i>
+                {{ editMode ? 'Modifier l\'article' : 'Créer un nouvel article' }}
+            </h1>
+        </div>
+
+        <div class="card-body">
+            {{ form_start(form, {
+                attr: {
+                    class: 'needs-validation',
+                    novalidate: 'novalidate',
+                    enctype: 'multipart/form-data'
+                }
+            }) }}
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control' ~ (form.title.vars.errors|length ? ' is-invalid' : '')}}) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.excerpt, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.excerpt, {'attr': {'class': 'form-control' ~ (form.excerpt.vars.errors|length ? ' is-invalid' : ''), 'rows': 3}}) }}
+                        {{ form_errors(form.excerpt) }}
+                        <div class="form-text">Ce résumé apparaîtra dans la liste des articles</div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.content, {'attr': {'class': 'form-control' ~ (form.content.vars.errors|length ? ' is-invalid' : ''), 'rows': 10}}) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form_label(form.slug, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.slug, {'attr': {'class': 'form-control' ~ (form.slug.vars.errors|length ? ' is-invalid' : '')}}) }}
+                        {{ form_errors(form.slug) }}
+                        <div class="form-text">L'URL de votre article</div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.imageFile, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' is-invalid' : '')}}) }}
+                        {{ form_errors(form.imageFile) }}
+
+                        {% if editMode and blog is defined and blog.image %}
+                            <div class="mt-2">
+                                <img src="{{ asset('uploads/blog/' ~ blog.image) }}" alt="Image actuelle" class="img-thumbnail" style="max-height: 150px;">
+                                <p class="small text-muted mt-1">Image actuelle</p>
+
+                                <form method="post" action="{{ path('admin_blog_delete_image', { id: blog.id }) }}" onsubmit="return confirm('Supprimer définitivement l’image ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete_image_' ~ blog.id) }}">
+                                    <button class="btn btn-sm btn-danger mt-2" type="submit">
+                                        <i class="fas fa-trash-alt"></i> Supprimer l’image
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ path('admin_blog_index') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i>
+                    {{ editMode ? 'Mettre à jour' : 'Créer' }}
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Validation côté client Bootstrap
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+{% endblock %}

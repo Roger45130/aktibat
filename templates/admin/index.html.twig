@@ -1,0 +1,204 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Dashboard | Aktibat
+{% endblock %}
+
+{% block body %}
+	<h1 class="mb-4">
+		<i class="fa-solid fa-square-binary"></i>
+		Bienvenue dans l’espace d’administration
+	</h1>
+
+	{# Formulaire de filtre par période #}
+	<form method="get" action="{{ path('admin_index') }}" class="row g-3 mb-4">
+		<div class="col-md-4">
+			<label for="start_date" class="form-label">Date de début</label>
+			<input type="date" id="start_date" name="start_date" value="{{ start_date }}" class="form-control">
+		</div>
+		<div class="col-md-4">
+			<label for="end_date" class="form-label">Date de fin</label>
+			<input type="date" id="end_date" name="end_date" value="{{ end_date }}" class="form-control">
+		</div>
+		<div class="col-md-4 d-flex align-items-end">
+			<button type="submit" class="btn btn-primary w-100">
+				<i class="fa-solid fa-filter"></i>
+				Filtrer
+			</button>
+		</div>
+	</form>
+
+	{# Cartes statistiques principales #}
+	<div class="row g-4">
+		<div class="col-md-3">
+			<div class="card border-start border-primary border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Utilisateurs</h5>
+					<p class="fs-3 fw-bold text-primary">{{ usersCount }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-success border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Messages de contact</h5>
+					<p class="fs-3 fw-bold text-success">{{ contactsCount }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-info border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Articles de blog</h5>
+					<p class="fs-3 fw-bold text-info">{{ blogsCount }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-warning border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Témoignages</h5>
+					<p class="fs-3 fw-bold text-warning">{{ commentsCount }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr
+	class="my-5">
+
+	{# Graphiques responsive côte à côte ou empilés #}
+	<div class="row g-4">
+		<div class="col-md-4 col-12">
+			<div class="card shadow-sm h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="fa-solid fa-chart-column"></i>
+						Statistiques générales</h5>
+					<canvas id="chartGlobal"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-12">
+			<div class="card shadow-sm h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="fa-solid fa-cookie-bite"></i>
+						Cookies (Vue globale)</h5>
+					<canvas id="chartCookies"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-12">
+			<div class="card shadow-sm h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="fa-solid fa-sliders"></i>
+						Détails consentement</h5>
+					<canvas id="chartConsent"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr
+	class="my-5">
+
+	{# Détails consentements (textes) #}
+	<h2 class="h4 mb-4">
+		<i class="fa-solid fa-cookie-bite"></i>
+		Consentements aux cookies</h2>
+	<div class="row g-4">
+		<div class="col-md-3">
+			<div class="card border-start border-dark border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Consentement total</h5>
+					<p class="fs-4 fw-bold text-dark">{{ totalConsent }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-secondary border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Statistiques</h5>
+					<p class="fs-4 fw-bold text-secondary">{{ statConsent }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-danger border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Marketing</h5>
+					<p class="fs-4 fw-bold text-danger">{{ marketingConsent }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-start border-muted border-4 shadow h-100 py-2">
+				<div class="card-body">
+					<h5 class="card-title">Refus complet</h5>
+					<p class="fs-4 fw-bold text-muted">{{ refusedConsent }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Scripts Chart.js #}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+new Chart(document.getElementById('chartGlobal'), {
+type: 'bar',
+data: {
+labels: [
+'Utilisateurs', 'Contacts', 'Blogs', 'Témoignages'
+],
+datasets: [
+{
+label: 'Total',
+data: [
+{{ usersCount }}, {{ contactsCount }}, {{ blogsCount }}, {{ commentsCount }}
+],
+backgroundColor: '#0d6efd'
+}
+]
+}
+});
+
+new Chart(document.getElementById('chartCookies'), {
+type: 'bar',
+data: {
+labels: [
+'Tous', 'Statistiques', 'Marketing', 'Refus'
+],
+datasets: [
+{
+label: 'Cookies',
+data: [
+{{ allCookiesCount }}, {{ statsCookiesCount }}, {{ marketingCookiesCount }}, {{ noCookiesCount }}
+],
+backgroundColor: '#198754'
+}
+]
+}
+});
+
+new Chart(document.getElementById('chartConsent'), {
+type: 'bar',
+data: {
+labels: [
+'Total', 'Stats', 'Marketing', 'Refus'
+],
+datasets: [
+{
+label: 'Consentement',
+data: [
+{{ totalConsent }}, {{ statConsent }}, {{ marketingConsent }}, {{ refusedConsent }}
+],
+backgroundColor: '#ffc107'
+}
+]
+}
+});
+});
+	</script>
+{% endblock %}

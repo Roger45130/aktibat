@@ -1,0 +1,229 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/galerie.css') }}">
+{% endblock %}
+
+{% block title %}Galerie | Aktibat{% endblock %}
+
+{% block body %}
+	<div class="gallery-container">
+		<h1 class="gallery-title h1Gallery">Notre Galerie</h1>
+		<p class="gallery-intro pGallery">
+			Découvrez nos réalisations à travers cette sélection de photos. Cliquez sur une image pour l'agrandir.
+		</p>
+
+		<div class="gallery-slider">
+			{% for image in gallery_images %}
+				<div class="gallery-slide slide-in">
+					<img src="{{ asset('uploads/galerie/' ~ image.filename) }}" alt="{{ image.alt }}" class="gallery-image" data-index="{{ loop.index0 }}" loading="lazy">
+				</div>
+			{% endfor %}
+		</div>
+		<br>
+		<h2 class="gallery-title h1Gallery">Quelques photos de début de chantier</h2><br>
+		<div class="gallery-slider">
+			{% for image in debut_images %}
+				<div class="gallery-slide slide-in">
+					<img src="{{ asset('uploads/galerie/debut/' ~ image.filename) }}" alt="{{ image.alt }}" class="gallery-image" data-index="{{ loop.index0 }}" loading="lazy">
+				</div>
+			{% endfor %}
+		</div>
+		<br>
+		<h2 class="gallery-title h1Gallery">Quelques photos pendant le chantier</h2><br>
+		<div class="gallery-slider">
+			{% for image in avantDerniere_images %}
+				<div class="gallery-slide slide-in">
+					<img src="{{ asset('uploads/galerie/avantDerniere/' ~ image.filename) }}" alt="{{ image.alt }}" class="gallery-image" data-index="{{ loop.index0 }}" loading="lazy">
+				</div>
+			{% endfor %}
+		</div>
+		<br>
+		<h2 class="gallery-title h1Gallery">Quelques photos de fin de chantier</h2><br>
+		<div class="gallery-slider">
+			{% for image in derniere_images %}
+				<div class="gallery-slide slide-in">
+					<img src="{{ asset('uploads/galerie/derniere/' ~ image.filename) }}" alt="{{ image.alt }}" class="gallery-image" data-index="{{ loop.index0 }}" loading="lazy">
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<h2 class="gallery-title h1Gallery">Vidéo et photo du chantier</h2><br>
+		<div class="video-photo-section">
+			<div class="video-container">
+				<div class="video-container">
+					<video controls width="100%" style="max-width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+						<source src="{{ asset('uploads/galerie/video/VIDEO-2025-05-15-17-15-20-V1.mp4') }}" type="video/mp4">
+						Votre navigateur ne prend pas en charge la lecture vidéo.
+					</video>
+				</div>
+			</div>
+			<div class="photo-container" style="max-width: 200px; height: auto;">
+				<img src="{{ asset('uploads/galerie/autresChantier/PHOTO-2025-05-15-17-15-19-19.jpg') }}" alt="Photo chantier" class="gallery-image">
+			</div>
+		</div>
+
+		<!-- Lightbox -->
+		<div class="lightbox" id="lightbox">
+			<button class="lightbox-close" aria-label="Fermer la lightbox">&times;</button>
+			<button class="lightbox-prev" aria-label="Image précédente">&larr;</button>
+			<button class="lightbox-next" aria-label="Image suivante">&rarr;</button>
+
+			<div class="lightbox-content">
+				<img src="" alt="" class="lightbox-img" id="lightbox-img">
+				<div class="lightbox-caption" id="lightbox-caption"></div>
+			</div>
+		</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<style>
+		@keyframes slideInUp {
+			from {
+				transform: translateY(30px);
+				opacity: 0;
+			}
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		.slide-in {
+			opacity: 0;
+			transform: translateY(30px);
+			transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+		}
+
+		.slide-in.visible {
+			animation: slideInUp 0.6s ease-out forwards;
+		}
+
+		.video-photo-section {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 2rem;
+			align-items: flex-start;
+			justify-content: center;
+			margin: 2rem 0;
+		}
+
+		.video-container,
+		.photo-container {
+			flex: 1 1 400px;
+			max-width: 600px;
+		}
+
+		.photo-container img {
+			width: 100%;
+			border-radius: 8px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const lightbox = document.getElementById('lightbox');
+			const lightboxImg = document.getElementById('lightbox-img');
+			const lightboxCaption = document.getElementById('lightbox-caption');
+			const galleryImages = document.querySelectorAll('.gallery-image');
+			const closeBtn = document.querySelector('.lightbox-close');
+			const prevBtn = document.querySelector('.lightbox-prev');
+			const nextBtn = document.querySelector('.lightbox-next');
+
+			let currentIndex = 0;
+			const images = Array.from(galleryImages);
+
+			galleryImages.forEach((img, index) => {
+				img.addEventListener('click', () => {
+					currentIndex = index;
+					updateLightbox();
+					lightbox.classList.add('active');
+					document.body.style.overflow = 'hidden';
+				});
+			});
+
+			closeBtn.addEventListener('click', () => {
+				lightbox.classList.remove('active');
+				document.body.style.overflow = 'auto';
+			});
+
+			prevBtn.addEventListener('click', () => {
+				currentIndex = (currentIndex - 1 + images.length) % images.length;
+				updateLightbox();
+			});
+
+			nextBtn.addEventListener('click', () => {
+				currentIndex = (currentIndex + 1) % images.length;
+				updateLightbox();
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (!lightbox.classList.contains('active')) return;
+
+				if (e.key === 'Escape') {
+					lightbox.classList.remove('active');
+					document.body.style.overflow = 'auto';
+				} else if (e.key === 'ArrowLeft') {
+					currentIndex = (currentIndex - 1 + images.length) % images.length;
+					updateLightbox();
+				} else if (e.key === 'ArrowRight') {
+					currentIndex = (currentIndex + 1) % images.length;
+					updateLightbox();
+				}
+			});
+
+			function updateLightbox() {
+				const img = images[currentIndex];
+				lightboxImg.src = img.src;
+				lightboxImg.alt = img.alt;
+				lightboxCaption.textContent = img.title;
+				lightboxImg.style.animation = 'none';
+				void lightboxImg.offsetWidth;
+				lightboxImg.style.animation = 'fadeIn 0.5s ease';
+			}
+
+			let scrollInterval;
+			const gallerySlider = document.querySelector('.gallery-slider');
+
+			function startAutoScroll() {
+				scrollInterval = setInterval(() => {
+					if (gallerySlider.scrollLeft + gallerySlider.clientWidth >= gallerySlider.scrollWidth - 50) {
+						gallerySlider.scrollTo({left: 0, behavior: 'smooth'});
+					} else {
+						gallerySlider.scrollBy({left: 300, behavior: 'smooth'});
+					}
+				}, 3000);
+			}
+
+			function stopAutoScroll() {
+				clearInterval(scrollInterval);
+			}
+
+			gallerySlider.addEventListener('mouseenter', stopAutoScroll);
+			gallerySlider.addEventListener('mouseleave', startAutoScroll);
+
+			startAutoScroll();
+
+			// IntersectionObserver for animation
+			const slideIns = document.querySelectorAll('.slide-in');
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			}, {
+				threshold: 0.2
+			});
+
+			slideIns.forEach(slide => {
+				observer.observe(slide);
+			});
+		});
+	</script>
+{% endblock %}

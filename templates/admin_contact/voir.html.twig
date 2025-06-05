@@ -1,0 +1,119 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Message de Contact #{{ contact.id }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.message-container {
+			max-width: 800px;
+			margin: 2rem auto;
+			padding: 0 1.5rem;
+		}
+		.message-header {
+			background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			color: white;
+			padding: 1.5rem;
+			border-radius: 10px 10px 0 0;
+			margin-bottom: 0;
+		}
+		.message-card {
+			border: none;
+			border-radius: 0 0 10px 10px;
+			box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+		}
+		.message-body {
+			padding: 2rem;
+		}
+		.form-label {
+			font-weight: 500;
+			color: #2c3e50;
+		}
+		.form-control[readonly] {
+			background-color: #f8f9fa;
+			border: 1px solid #e9ecef;
+		}
+		.message-textarea {
+			min-height: 250px;
+		}
+		.meta-info {
+			font-size: 0.9rem;
+			color: #7f8c8d;
+			border-top: 1px solid #eee;
+			padding-top: 1rem;
+			margin-top: 1.5rem;
+		}
+		.action-btns {
+			display: flex;
+			gap: 1rem;
+			margin-top: 2rem;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="message-container">
+		<h1 class="message-header text-center">
+			<i class="fas fa-envelope-open-text me-2"></i>
+			Détail du Message #{{ contact.id }}
+		</h1>
+
+		<div class="card message-card">
+			<div class="card-body message-body">
+				<form>
+					<div class="row mb-4">
+						<div class="col-md-6 mb-3 mb-md-0">
+							<label class="form-label">Nom complet</label>
+							<input type="text" class="form-control" value="{{ contact.fullname }}" readonly>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">Adresse Email</label>
+							<div class="input-group">
+								<input type="email" class="form-control" value="{{ contact.email }}" readonly>
+								<a href="mailto:{{ contact.email }}" class="btn btn-outline-primary">
+									<i class="fas fa-reply"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-4">
+						<label class="form-label">Sujet</label>
+						<input type="text" class="form-control" value="{{ contact.subject }}" readonly>
+					</div>
+
+					<div class="mb-4">
+						<label class="form-label">Message</label>
+						<textarea class="form-control message-textarea" readonly>{{ contact.message }}</textarea>
+					</div>
+
+					<div class="meta-info">
+						<div class="d-flex justify-content-between">
+							<div>
+								<i class="fas fa-clock me-1"></i>
+								Reçu le :
+								{{ contact.createdAt|format_datetime('full', 'short') }}
+							</div>
+							<div>
+								<i class="fas fa-id-card me-1"></i>
+								ID : #{{ contact.id }}
+							</div>
+						</div>
+					</div>
+
+					<div class="action-btns">
+						<a href="{{ path('admin_contact_index') }}" class="btn btn-secondary">
+							<i class="fas fa-arrow-left me-2"></i>
+							Retour à la liste
+						</a>
+						<a href="{{ path('admin_contact_export_pdf') }}" target="_blank" class="btn btn-primary">
+							<i class="fas fa-file-pdf me-2"></i>
+							Exporter en PDF
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
