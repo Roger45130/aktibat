@@ -1,17 +1,16 @@
-# Activer le moteur de réécriture d’URL
-RewriteEngine On
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
 
-# Forcer redirection de .com vers .fr
-RewriteCond %{HTTP_HOST} ^(www\.)?aktibat\.com$ [NC]
-RewriteRule ^(.*)$ https://www.aktibat.fr/$1 [R=301,L]
-
-# Bloquer l'accès aux fichiers sensibles (.env, etc.)
 <FilesMatch "^\.env.*$">
-  Order Allow,Deny
-  Deny from all
+    Order allow,deny
+    Deny from all
 </FilesMatch>
 
-# Réécriture d'URL pour Symfony
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php82
+</FilesMatch>
+AddHandler application/x-httpd-php82 .php
