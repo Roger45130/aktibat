@@ -1,3 +1,16 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php [QSA,L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+<FilesMatch "^\.env.*$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php82
+</FilesMatch>
+AddHandler application/x-httpd-php82 .php
