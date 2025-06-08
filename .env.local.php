@@ -12,7 +12,7 @@ return array (
   'CURRENT_YEAR' => '2025',
   'TZ' => 'Europe/Paris',
   'IDE' => 'phpstorm',
-  'DATABASE_URL' => 'DATABASE_URL='mysql://scligrw8287_aktibat-scligrw8287:AktiBat_41240-2005X10@localhost:3306/scligrw8287_aktibat1?serverVersion=10.6.22-MariaDB&charset=utf8mb4',
+  'DATABASE_URL' => 'DATABASE_URL="mysql://scligrw8287_aktibat-scligrw8287:AktiBat_41240-2005X10@127.0.0.1:3306/scligrw8287_aktibat1?serverVersion=10.6.22-MariaDB&charset=utf8mb4"',
   'MESSENGER_TRANSPORT_DSN' => 'doctrine://default',
   'MAILER_DSN' => 'smtp://mail.aktibat.fr:465?encryption=ssl&auth_mode=login',
   'MAILER_FROM' => 'noreply@aktibat.fr',
