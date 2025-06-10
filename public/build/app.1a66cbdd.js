@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[524],{13:()=>{console.log("Bienvenue sur Aktibat ⚡")}},e=>{var s;s=13,e(e.s=s)}]);
